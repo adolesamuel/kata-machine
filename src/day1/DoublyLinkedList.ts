@@ -1,5 +1,7 @@
 export default class DoublyLinkedList<T> {
     public length: number;
+    private head?: Node<T>;
+    private tail?:Node<T>;
 
     
 
@@ -24,4 +26,11 @@ export default class DoublyLinkedList<T> {
     removeAt(idx: number): T | undefined {
 
 }
+}
+
+
+type Node<T> = {
+    value: T,
+    prev?: Node<T>,
+    next?: Node<T>,
 }
