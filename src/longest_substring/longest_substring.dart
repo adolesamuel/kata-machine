@@ -1,6 +1,6 @@
 import 'dart:math';
 
-/// Return the length of the longest substring.
+// longest-substring-without-repeating-characters
 int longestSubstring(String s) {
   final List<String> result = [];
 
