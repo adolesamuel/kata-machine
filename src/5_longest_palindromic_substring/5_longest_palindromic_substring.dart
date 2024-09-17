@@ -1,3 +1,5 @@
+import 'dart:math';
+
 void main() {
   final s = "babad";
 
@@ -8,31 +10,38 @@ void main() {
   print(result);
 }
 
+//n2
 class Solution {
   String longestPalindrome(String s) {
-    String question = s;
     String result = '';
+    int resLen = 0;
 
-    for (int l = 0, r = 0; r < s.length; ++r) {
-      bool isPalin =
-          question.substring(l, r + 1) == reverse(question.substring(l, r + 1));
+    int l = 0;
+    int r = 0;
 
-      if (isPalin) {
-        if (result.length < question.substring(l, r + 1).length) {
-          result = question.substring(l, r + 1);
-        }
-      } else {
-        if (r == s.length - 1) {
-          l++;
-          r = l;
-        }
+    for (int i = 0; i < s.length; ++i) {
+      //odd length
+      l = i;
+      r = i;
+      while (l >= 0 && r < s.length && s[l] == s[r]) {
+        result = resLen > r - l + 1 ? result : s.substring(l, r + 1);
+        resLen = max(resLen, r - l + 1);
+
+        l -= 1;
+        r += 1;
+      }
+
+      //Even length
+      l = i;
+      r = i + 1;
+      while (l >= 0 && r < s.length && s[l] == s[r]) {
+        result = resLen > r - l + 1 ? result : s.substring(l, r + 1);
+        resLen = max(resLen, r - l + 1);
+        l -= 1;
+        r += 1;
       }
     }
 
     return result;
   }
-}
-
-String reverse(String s) {
-  return s.split('').reversed.join();
 }
