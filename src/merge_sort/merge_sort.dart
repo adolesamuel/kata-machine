@@ -1,16 +1,6 @@
 // dart run src/merge_sort/merge_sort.dart
 void main() {
-  List<int> list = [
-    8,
-    6,
-    7,
-    7,
-    5,
-    4,
-    3,
-    2,
-    1
-  ]; // for demonstration purpose i used simple list from 8-1
+  List<int> list = [8, 6, 7, 7, 5, 4, 3, 2, 1]; // for demonstration purpose i used simple list from 8-1
   print("Given Array is :\n$list");
   List<int> sortedList = mergeSort(list);
   print("Sorted Array is :\n$sortedList");
