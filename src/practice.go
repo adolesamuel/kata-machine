@@ -2,13 +2,10 @@ package practice
 
 import "slices"
 
-func lengthOfLongestSubstring(s string) int {
+func longestsubstring(s string) int {
 	result := []string{}
-
 	answer := 0
-
 	l := 0
-
 	for r := 0; r < len(s); r++ {
 		for slices.Contains(result, string(s[r])) {
 			l++
