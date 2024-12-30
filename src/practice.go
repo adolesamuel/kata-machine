@@ -1,28 +1,30 @@
 package practice
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
+import "slices"
+
+func lengthOfLongestSubstring(s string) int {
+	result := []string{}
+
+	answer := 0
+
+	l := 0
+
+	for r := 0; r < len(s); r++ {
+		for slices.Contains(result, string(s[r])) {
+			l++
+			result = result[1:]
+		}
+
+		result = append(result, string(s[r]))
+		answer = max(answer, r-l+1)
+	}
+
+	return answer
 }
 
-func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	baseNode := ListNode{Val: 0}
-	currentNode := baseNode
-	carry := 0
-	for l1 != nil || l2 != nil || carry > 0 {
-		if l1 != nil {
-			carry += l1.Val
-			l1 = l1.Next
-		}
-
-		if l2 != nil {
-			carry += l2.Val
-			l2 = l2.Next
-		}
-
-		currentNode.Next = &ListNode{Val: carry % 10}
-		currentNode = *currentNode.Next
-		carry /= 10
+func max(a, b int) int {
+	if a > b {
+		return a
 	}
-	return baseNode.Next
+	return b
 }
