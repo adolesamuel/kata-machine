@@ -1,19 +1,28 @@
 package practice
 
-func twoSum(nums []int, target int) []int {
-	historyMap := map[int]int{}
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
 
-	for index, value := range nums {
-		result := target - value
-
-		val, ok := historyMap[result]
-
-		if ok {
-			return []int{index, val}
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	baseNode := ListNode{Val: 0}
+	currentNode := baseNode
+	carry := 0
+	for l1 != nil || l2 != nil || carry > 0 {
+		if l1 != nil {
+			carry += l1.Val
+			l1 = l1.Next
 		}
 
-		historyMap[value] = index
-	}
+		if l2 != nil {
+			carry += l2.Val
+			l2 = l2.Next
+		}
 
-	return []int{}
+		currentNode.Next = &ListNode{Val: carry % 10}
+		currentNode = *currentNode.Next
+		carry /= 10
+	}
+	return baseNode.Next
 }
