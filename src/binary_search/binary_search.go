@@ -16,3 +16,6 @@ func binarySearch(haystack []int, needle int) bool {
 	}
 	return false
 }
+
+//1
+//2

@@ -14,7 +14,7 @@ func AssertCorrectMessage(t testing.TB, got, want any) {
 }
 
 func RunTestsWithTimeOut(t testing.TB, testFunction func()) {
-
+	t.Helper()
 	timeout := 2 * time.Second
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)

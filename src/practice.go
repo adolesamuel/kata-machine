@@ -1,67 +1,37 @@
-package main
+package practice
 
-func binarysearchNormal(needle int, haystack []int) (bool, int) {
-	low := 0
+func binarysearch(needle int, haystack []int) bool {
 	high := len(haystack)
-	numOfLoops := 0
+	low := 0
 
-	//Algorithm steps for binary search
-	// loop until high < low
-	// split the array into two
-	// in the loop.
-	// get mid point
-	// item at mid point == needle return true
-	// item at mid point > needle reduce high
-	// item at mid point < needle reduce low
-	// run again.
-	// if not found return false
-
-	for low < high {
+	for high > low {
 		mid := (high + low) / 2
-
 		if haystack[mid] == needle {
-			return true, numOfLoops
+			return true
 		} else if haystack[mid] > needle {
 			high = mid
 		} else if haystack[mid] < needle {
 			low = mid + 1
 		}
-		numOfLoops++
 	}
 
-	return false, numOfLoops
-
+	return false
 }
 
-func binarysearchAdjusted(needle int, haystack []int) (bool, int) {
-	low := 0
+func binarySearch(needle int, haystack []int) bool {
 	high := len(haystack)
-	numOfLoops := 0
-
-	//Algorithm steps for binary search
-	// loop until high < low
-	// split the array into two
-	// in the loop.
-	// get mid point
-	// item at mid point == needle return true
-	// item at mid point > needle reduce high
-	// item at mid point < needle reduce low
-	// run again.
-	// if not found return false
+	low := 0
 
 	for low < high {
 		mid := (high + low) / 2
-
 		if haystack[mid] == needle {
-			return true, numOfLoops
+			return true
 		} else if haystack[mid] > needle {
 			high = mid
 		} else if haystack[mid] < needle {
 			low = mid + 1
 		}
-		numOfLoops++
 	}
 
-	return false, numOfLoops
-
+	return false
 }
