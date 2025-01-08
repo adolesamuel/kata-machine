@@ -65,7 +65,3 @@ func binarysearchAdjusted(needle int, haystack []int) (bool, int) {
 	return false, numOfLoops
 
 }
-
-func main() {
-
-}
