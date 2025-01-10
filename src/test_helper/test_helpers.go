@@ -8,9 +8,26 @@ import (
 
 func AssertCorrectMessage(t testing.TB, got, want any) {
 	t.Helper()
+
 	if got != want {
 		t.Errorf("got %q want %q", got, want)
 	}
+}
+
+func AssertIterablesAreEqual(t testing.TB, got, want []int) {
+	t.Helper()
+
+	if len(got) != len(want) {
+		t.Errorf("got %q is not Equal to %q", got, want)
+	} else {
+		for index, val := range got {
+			if val != want[index] {
+				t.Errorf("got %q is not Equal to %q", got, want)
+				break
+			}
+		}
+	}
+
 }
 
 func RunTestsWithTimeOut(t testing.TB, testFunction func()) {
