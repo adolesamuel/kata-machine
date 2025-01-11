@@ -6,8 +6,11 @@
     "configurations": [
         {
             "name": "Dart & Flutter",
+            "type": "dart",
             "request": "launch",
-            "type": "dart"
+            "mode": "debug",
+            "program": "${file}",
+            "cwd": "${workspaceFolder}",
         },
 
         {
