@@ -1,3 +1,8 @@
+/// Comments:
+/// The Top down Memoization and the DP Table
+/// are basicallly the same algorithm.
+/// Just different implementation of memoization.
+///
 // TOP Down Memoization.
 bool isMatch(String s, String p) {
   final cache = {};
@@ -29,41 +34,38 @@ bool isMatch(String s, String p) {
 
 /// DP Table Solution.
 bool isMatchDpTable(String input, String pattern) {
-  int inputLength = input.length;
-  int patternLength = pattern.length;
   List<List<bool>> dp = List.generate(
-      inputLength + 1, (_) => List.filled(patternLength + 1, false));
+      input.length + 1, (_) => List.filled(pattern.length + 1, false));
 
   dp[0][0] = true;
 
   // Handle patterns with '*' that can match zero characters
-  for (int patternIndex = 1; patternIndex <= patternLength; patternIndex++) {
+  for (int patternIndex = 1; patternIndex <= pattern.length; patternIndex++) {
     if (pattern[patternIndex - 1] == '*') {
       dp[0][patternIndex] = dp[0][patternIndex - 2];
     }
   }
 
-  for (int inputIndex = 1; inputIndex <= inputLength; inputIndex++) {
-    for (int patternIndex = 1; patternIndex <= patternLength; patternIndex++) {
-      if (pattern[patternIndex - 1] == '.' ||
-          input[inputIndex - 1] == pattern[patternIndex - 1]) {
-        dp[inputIndex][patternIndex] = dp[inputIndex - 1][patternIndex - 1];
-      } else if (pattern[patternIndex - 1] == '*') {
-        dp[inputIndex][patternIndex] = dp[inputIndex][patternIndex - 2] ||
-            (dp[inputIndex - 1][patternIndex] &&
-                (pattern[patternIndex - 2] == '.' ||
-                    input[inputIndex - 1] == pattern[patternIndex - 2]));
+  for (int i = 1; i <= input.length; i++) {
+    for (int p = 1; p <= pattern.length; p++) {
+      if (pattern[p - 1] == '.' || input[i - 1] == pattern[p - 1]) {
+        dp[i][p] = dp[i - 1][p - 1];
+      } else if (pattern[p - 1] == '*') {
+        //this is the core logic
+        dp[i][p] = dp[i][p - 2] ||
+            (dp[i - 1][p] &&
+                (pattern[p - 2] == '.' || input[i - 1] == pattern[p - 2]));
       }
     }
   }
 
-  return dp[inputLength][patternLength];
+  return dp[input.length][pattern.length];
 }
 
 void main() {
-  print(isMatch("aa", "a")); // false
-  print(isMatch("aa", "a*")); // true
-  print(isMatch("ab", ".*")); // true
-  print(isMatch("aab", "c*a*b")); // true
-  print(isMatch("mississippi", "mis*is*p*.")); // false
+  print(isMatchDpTable("aa", "a")); // false
+  print(isMatchDpTable("aa", "a*")); // true
+  print(isMatchDpTable("ab", ".*")); // true
+  print(isMatchDpTable("aab", "c*a*b")); // true
+  print(isMatchDpTable("mississippi", "mis*is*p*.")); // false
 }

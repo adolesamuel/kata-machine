@@ -1,38 +1,32 @@
-import 'dart:math';
+bool isMatch(String input, String pattern) {
+  int inputLength = input.length;
+  int patternLength = pattern.length;
+  List<List<bool>> dp = List.generate(
+      inputLength + 1, (_) => List.filled(patternLength + 1, false));
 
-List<int> mergeSort(List<int> list) {
-  final mid = list.length ~/ 2;
+  /// Empty input matches empty pattern.
+  dp[0][0] = true;
 
-  final left = mergeSort(list.sublist(0, mid));
-  final right = mergeSort(list.sublist(mid));
+  ///handle empty input matching patterns.
 
-  return merge(left, right);
-}
-
-List<int> merge(List<int> left, List<int> right) {
-  List<int> result = [];
-  int i = 0;
-  int j = 0;
-
-  while (i < left.length && j < right.length) {
-    if (left[i] <= right[j]) {
-      result.add(left[i]);
-      i++;
-    } else {
-      result.add(right[j]);
-      j++;
+  for (int p = 1; p <= patternLength; p++) {
+    if (pattern[p - 1] == '*') {
+      dp[0][p] = dp[0][p - 2];
     }
   }
 
-  while (i < left.length) {
-    result.add(left[i]);
-    i++;
+  for (int i = 1; i <= input.length; i++) {
+    for (int p = 1; p <= patternLength; p++) {
+      if (pattern[p - 1] == '.' || input[i - 1] == pattern[p - 1]) {
+        dp[i][p] = dp[i - 1][p - 1];
+      } else if (pattern[p - 1] == '*') {
+        //This is
+        dp[i][p] = dp[i][p - 2] ||
+            (dp[i - 1][p] &&
+                (pattern[p - 2] == '.' || input[i - 1] == pattern[p - 2]));
+      }
+    }
   }
 
-  while (j < right.length) {
-    result.add(right[j]);
-    j++;
-  }
-
-  return result;
+  return dp[inputLength][patternLength];
 }
