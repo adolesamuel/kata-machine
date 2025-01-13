@@ -1,3 +1,5 @@
+import '../practice.dart';
+
 /// Comments:
 /// The Top down Memoization and the DP Table
 /// are basicallly the same algorithm.
@@ -36,8 +38,12 @@ bool isMatch(String s, String p) {
 bool isMatchDpTable(String input, String pattern) {
   List<List<bool>> dp = List.generate(
       input.length + 1, (_) => List.filled(pattern.length + 1, false));
+  print('Just Created dp: $dp');
 
+  /// Empty input matches empty pattern.
   dp[0][0] = true;
+
+  print('Empty Input matches dp: $dp');
 
   // Handle patterns with '*' that can match zero characters
   for (int patternIndex = 1; patternIndex <= pattern.length; patternIndex++) {
@@ -46,26 +52,50 @@ bool isMatchDpTable(String input, String pattern) {
     }
   }
 
+  print('After matching pattern to empty dp: $dp');
+
   for (int i = 1; i <= input.length; i++) {
     for (int p = 1; p <= pattern.length; p++) {
+      //if current pattern is '.' or input character == pattern character
+      // then current value = previous value.(value saved to the table.)
       if (pattern[p - 1] == '.' || input[i - 1] == pattern[p - 1]) {
         dp[i][p] = dp[i - 1][p - 1];
       } else if (pattern[p - 1] == '*') {
-        //this is the core logic
+        // this is the core logic
+        // else if current pattern is '*' then
+        // is is valid when the pattern is not applied or zero, or
+        // is it valid for one and the character is supported
+        //
         dp[i][p] = dp[i][p - 2] ||
             (dp[i - 1][p] &&
                 (pattern[p - 2] == '.' || input[i - 1] == pattern[p - 2]));
+      } else if (pattern[p - 1] == '+') {
+        dp[i][p] = dp[i - 1][p - 1] ||
+            (dp[i - 1][p] &&
+                (pattern[p - 2] == '.' || input[i - 1] == pattern[p - 2]));
+        // if (i > 1) {
+        //   dp[i][p] = dp[i][p] || dp[i - 1][p - 1];
+        // }
       }
+      print('for loop : i=$i, p=$p');
+      print(dp);
+      print('------------------');
     }
   }
+
+  print('final Value $dp');
 
   return dp[input.length][pattern.length];
 }
 
 void main() {
-  print(isMatchDpTable("aa", "a")); // false
-  print(isMatchDpTable("aa", "a*")); // true
-  print(isMatchDpTable("ab", ".*")); // true
-  print(isMatchDpTable("aab", "c*a*b")); // true
-  print(isMatchDpTable("mississippi", "mis*is*p*.")); // false
+  // print(isMatchPractice("aa", "a")); // false
+  print(isMatchPractice("aab", "a+.")); // true
+  // print(isMatchDpTable("ab", ".*")); // true
+  // print(isMatchPractice("aab", "c*a+b")); // true
+  print(isMatchPractice("mississippi", "mis*is*p+.")); // false
 }
+
+
+//1
+//2
