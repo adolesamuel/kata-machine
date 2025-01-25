@@ -23,12 +23,11 @@ bool isMatchPractice(String input, String pattern) {
             (dp[i - 1][p] &&
                 (pattern[p - 2] == '.' || pattern[p - 2] == input[i - 1]));
       } else if (pattern[p - 1] == '+') {
-        dp[i][p] = dp[i - 1][p - 1] ||
-            (dp[i - 1][p] &&
-                (pattern[p - 2] == '.' || pattern[p - 2] == input[i - 1]));
-        // if (i > 1) {
-        //   dp[i][p] = dp[i][p] || dp[i - 1][p - 1];
-        // }
+        dp[i][p] = (dp[i - 1][p] &&
+            (pattern[p - 2] == '.' || pattern[p - 2] == input[i - 1]));
+        if (i > 1) {
+          dp[i][p] = dp[i][p] || dp[i - 1][p - 1];
+        }
       }
     }
   }

@@ -90,7 +90,7 @@ bool isMatchDpTable(String input, String pattern) {
 
 void main() {
   // print(isMatchPractice("aa", "a")); // false
-  print(isMatchPractice("aab", "a+.")); // true
+  print(isMatchPractice("a", "a+")); // true
   // print(isMatchDpTable("ab", ".*")); // true
   // print(isMatchPractice("aab", "c*a+b")); // true
   print(isMatchPractice("mississippi", "mis*is*p+.")); // false
