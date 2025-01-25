@@ -11,19 +11,25 @@ bool isMatch(String s, String p) {
   // Ignore the cache when reading. It basically
   // works fine without it.
 
-  bool dfs(int i, j) {
+  bool dfs(int i, int j) {
+    // if we already have the result
     if (cache.containsKey((i, j))) {
       return cache[(i, j)];
     }
+    //if it is empty pattern and empty string
     if (i >= s.length && j >= p.length) return true;
+
+    //if pattern is empty and  string is not
     if (j >= p.length) return false;
 
     bool match = i < s.length && (s[i] == p[j] || p[j] == '.');
     if ((j + 1) < p.length && p[j + 1] == '*') {
-      cache[(i, j)] = dfs(i, j + 2) || (match && dfs(i + 1, j));
+      /// What is happening here.
+      /// this checks for a match between current pattern and next string.
+      /// or moves to next set.
+      cache[(i, j)] = (match && dfs(i + 1, j)) || dfs(i, j + 2);
       return cache[(i, j)];
-    }
-    if (match) {
+    } else if (match) {
       cache[(i, j)] = dfs(i + 1, j + 1);
       return cache[(i, j)];
     }
@@ -89,13 +95,12 @@ bool isMatchDpTable(String input, String pattern) {
 }
 
 void main() {
-  // print(isMatchPractice("aa", "a")); // false
+  print(isMatchPractice("aa", "a")); // false
   print(isMatchPractice("a", "a+")); // true
   // print(isMatchDpTable("ab", ".*")); // true
-  // print(isMatchPractice("aab", "c*a+b")); // true
+  print(isMatchPractice("aab", "c*a+b")); // true
   print(isMatchPractice("mississippi", "mis*is*p+.")); // false
 }
-
 
 //1
 //2
