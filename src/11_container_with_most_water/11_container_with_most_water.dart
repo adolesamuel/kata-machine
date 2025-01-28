@@ -29,11 +29,10 @@
 // 2 <= n <= 105
 // 0 <= height[i] <= 104
 
-// Naive Approach
-
 import 'dart:math';
 
 class Solution {
+// Naive Approach
   // THis approach brute forces the area.
   int maxArea(List<int> height) {
     int maxArea = 0;
@@ -44,6 +43,29 @@ class Solution {
         int area = 0;
         area = calculateArea(currentPoint, nextPoint);
         maxArea = max(maxArea, area);
+      }
+    }
+
+    return maxArea;
+  }
+
+  // TWo Pointer Solution
+  int maxAreaTwo(List<int> height) {
+    int left = 0;
+    int right = height.length - 1;
+    int maxArea = 0;
+
+    while (left < right) {
+      //get the area
+      int currentArea =
+          calculateArea([left, height[left]], [right, height[right]]);
+      maxArea = max(maxArea, currentArea);
+
+      //shrink the space
+      if (height[left] < height[right]) {
+        left += 1;
+      } else {
+        right -= 1;
       }
     }
 
