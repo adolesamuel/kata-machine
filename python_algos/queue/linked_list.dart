@@ -136,10 +136,89 @@ class _LinkedListIterator<E> implements Iterator<E> {
   }
 }
 
-void printInReverse(LinkedList<int> list) {}
+extension ReversibleLinkedList<E> on LinkedList<E> {
+  void reverse() {
+    tail = head;
+    var previous = head;
+    var current = head?.next;
+    previous?.next = null;
+    while (current != null) {
+      final next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
+    }
+  }
 
-void nodePrinter(Node<int> node) {
-  if (node.next == null) {
-    print(node.value);
-  } else {}
+  void reverse2() {
+    tail = head;
+    var current = head?.next;
+    var previous = head;
+    previous?.next = null;
+    while (current != null) {
+      final next = current.next;
+      current.next = previous;
+      previous = current;
+      current = next;
+    }
+  }
+
+  void removeAll(E value) {
+    while (head != null && head?.value == value) {
+      head = head?.next;
+    }
+    var previous = head;
+    var current = head?.next;
+
+    while (current != null) {
+      if (current.value == value) {
+        previous?.next = current.next;
+        current = previous?.next;
+        continue;
+      }
+      previous = current;
+      current = current.next;
+    }
+    if (tail?.value == value) {
+      tail = previous;
+    }
+  }
+}
+
+void printInReverse(LinkedList<int> list) {
+  if (list.isEmpty) {
+    print('Empty List');
+  } else {
+    nodePrinter(list.head);
+  }
+}
+
+void nodePrinter(Node<int>? node) {
+  if (node == null) {
+    return;
+  }
+  nodePrinter(node.next);
+  print(node.value);
+}
+
+Node<int>? findTheMiddleNode(LinkedList<int> list) {
+  var slow = list.head;
+  var fast = list.head;
+
+  while (fast?.next != null) {
+    fast = fast?.next?.next;
+    slow = slow?.next;
+  }
+
+  return slow;
+}
+
+LinkedList<int> reverseALinkedList(LinkedList<int> list) {
+  final reversedList = LinkedList<int>();
+  var currentNode = list.head;
+  while (currentNode != null) {
+    reversedList.push(currentNode.value);
+    currentNode = currentNode.next;
+  }
+  return reversedList;
 }

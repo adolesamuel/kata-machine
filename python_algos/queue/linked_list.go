@@ -1,4 +1,4 @@
-package queue
+package main
 
 import "fmt"
 
@@ -101,13 +101,4 @@ func (list *LinkedList[E]) RemoveAfter(node *Node[E]) E {
 	node.Next = node.Next.Next
 
 	return value
-}
-
-func main() {
-	list := LinkedList[int]{}
-	list.Push(1)
-	list.Append(2)
-	list.Append(3)
-	list.Append(4)
-	fmt.Println(list)
 }
