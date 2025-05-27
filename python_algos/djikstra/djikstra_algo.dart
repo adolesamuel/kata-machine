@@ -50,6 +50,37 @@ void printShortestPath(Vertex target) {
   print('${target.name} (${target.minDistance})');
 }
 
+void dijkstra(Vertex source) {
+  // Initialize source
+  source.minDistance = 0;
+  List<Vertex> priorityQueue = [source];
+
+  while (priorityQueue.isNotEmpty) {
+    // Sort by shortest known distance
+    priorityQueue.sort((a, b) => a.minDistance.compareTo(b.minDistance));
+    Vertex current = priorityQueue.removeAt(0);
+
+    if (current.visited) continue;
+
+    for (Edge edge in current.adjacenciesList) {
+      Vertex neighbor = edge.target;
+      double newDistance = current.minDistance + edge.weight;
+
+      if (newDistance < neighbor.minDistance) {
+        neighbor.minDistance = newDistance;
+        neighbor.predecessor = current;
+        priorityQueue.add(neighbor);
+      }
+    }
+
+    current.visited = true;
+  }
+
+  // ✅ At this point, all shortest paths are computed
+  print("Shortest paths from ${source.name}:");
+  _printAllPaths(source);
+}
+
 void main() {
   Vertex vertexA = Vertex(name: 'A');
   Vertex vertexB = Vertex(name: 'B');
