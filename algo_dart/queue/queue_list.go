@@ -14,6 +14,7 @@ func (ql *QueueList[E]) Dequeue() *E {
 		return nil
 	}
 	first := ql.list[0]
+	ql.list = ql.list[1:]
 	//TODO remove the first element.
 	return &first
 }
