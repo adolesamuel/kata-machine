@@ -171,3 +171,15 @@ func sortedSquares2(nums []int) []int {
 	}
 	return result
 }
+
+func moveZeroes(nums []int) {
+	l, r := 0, 0
+	for r < len(nums) {
+		if nums[r] != 0 {
+			//swap
+			nums[r], nums[l] = nums[l], nums[r]
+			l++
+		}
+		r++
+	}
+}
