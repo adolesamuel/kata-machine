@@ -10,45 +10,45 @@ const INF = math.MaxInt32
 // Dijkstra
 func Dijkstra(graph [][]int, source int) []int {
 	n := len(graph)
-	distanceTable := make([]int, n)
-	visitedTable := make([]bool, n)
-	prevTable := make([]int, n)
 
-	for i := range distanceTable {
-		distanceTable[i] = INF
-		prevTable[i] = -1
+	distance := make([]int, n)
+	prev := make([]int, n)
+	visited := make([]bool, n)
+
+	for i := range n {
+		distance[i] = INF
+		prev[i] = -1
 	}
 
-	distanceTable[source] = 0
+	distance[source] = 0
 
 	for range n {
 		current := -1
 
-		for k := range n {
-			if !visitedTable[k] && (current == -1 || distanceTable[k] < distanceTable[current]) {
-				current = k
+		for i := range n {
+			if !visited[i] && (current == -1 || distance[i] < distance[current]) {
+				current = i
 			}
 		}
 
-		if current == -1 || distanceTable[current] == INF {
+		if current == -1 || distance[current] == INF {
 			break
 		}
 
-		visitedTable[current] = true
+		visited[current] = true
 
-		for i := range n {
-			if graph[current][i] == 0 {
+		for neighbor := range n {
+			if graph[current][neighbor] == 0 {
 				continue
 			}
 
-			newDistance := distanceTable[current] + graph[current][i]
-			if newDistance < distanceTable[i] {
-				distanceTable[i] = newDistance
-				prevTable[i] = current
+			newDistance := distance[current] + graph[current][neighbor]
+			if newDistance < distance[neighbor] {
+				distance[neighbor] = newDistance
+				prev[neighbor] = current
 			}
 		}
-
 	}
 
-	return distanceTable
+	return distance
 }
